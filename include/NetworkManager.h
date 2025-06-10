@@ -11,10 +11,11 @@
 #define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
 
 // API endpoints - update with your server address
-#define API_ENDPOINT "http://192.168.178.190:7012/api/SensorData"
-#define REGISTER_ENDPOINT "http://192.168.178.190:7012/api/DeviceTokens/register"
-#define GET_TOKEN_ENDPOINT "http://192.168.178.190:7012/api/get-test-token"
-
+#define API_BASE_URL "https://health-monitoring-api-gaajasa6aac0b9dy.canadacentral-01.azurewebsites.net/api"
+#define API_ENDPOINT API_BASE_URL "/SensorData"
+#define REGISTER_ENDPOINT API_BASE_URL "/DeviceTokens/register"
+#define GET_TOKEN_ENDPOINT API_BASE_URL "/get-test-token"
+#define GET_DEVICE_CONFIG_ENDPOINT API_BASE_URL "/device-config/"
 // Unique device identifier
 #define DEVICE_ID "ESP32_FALL_001"
 
@@ -27,6 +28,7 @@ public:
   bool initialize(); // This will now also fetch the token and register
   bool sendSensorData(float accel, float gyro, bool fallDetected);
   void reconnect();
+  bool fetchDeviceConfig();
   
 private:
   bool isConnected;
