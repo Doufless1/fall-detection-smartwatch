@@ -14,6 +14,7 @@ AudioController speaker;
 
 unsigned long lastSampleTime = 0;
 unsigned long lastDebugOutput = 0;
+unsigned long lastSendTime = 0;
 unsigned long fallTimestamp = 0;
 bool fallReported = false;  // Track if fall has been reported to server
 
@@ -120,13 +121,17 @@ void loop() {
           fallTimestamp = millis();
           fallDetection->setState(STATE_FALL_DETECTED);
         }
-        
-        // Send regular sensor updates to server
+      }
+
+      // Send regular sensor updates to server. Each upload blocks the loop
+      // while the HTTPS request runs, so keep them infrequent.
+      if (millis() - lastSendTime >= SEND_INTERVAL_MS) {
+        lastSendTime = millis();
         float accelMagnitude, gyroMagnitude;
         gyroSensor.getAccelGyroData(accelMagnitude, gyroMagnitude);
         networkManager.sendSensorData(accelMagnitude, gyroMagnitude, false);
       }
-      
+
       // Debug output every second
       if (millis() - lastDebugOutput >= 1000) {
         lastDebugOutput = millis();

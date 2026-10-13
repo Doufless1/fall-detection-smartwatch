@@ -25,6 +25,7 @@
 #define REQUIRED_STILL_SAMPLES    50     // ~500ms of stillness to confirm emergency
 #define ALARM_SOUND_FREQUENCY_HZ  880    // A5, plays during an emergency
 #define ALARM_SOUND_VOLUME        0.1F   // speaker volume for alarm (0.0F - 1.0F)
+#define SEND_INTERVAL_MS          30000  // Upload sensor readings every 30s (fall alerts are sent immediately)
 
 
 #define ACCEL_BUFFER_SIZE         (PRE_IMPACT_WINDOW_MS / SAMPLING_PERIOD_MS)
