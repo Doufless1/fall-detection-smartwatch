@@ -28,7 +28,9 @@ public:
   CircularBuffer<float, GYRO_BUFFER_SIZE>& getGyroBuffer();
   
 private:
-  // we use the CircularBuffer because it helps with RAM which we have limited of because lets say the buffer is full its going to remove old data and replace it with a new one and its easier to find states that happend like falling emrgencty etc. jsut in general more benefitial and as u can see we have two instance of him the private one is the acual buffer. the second one with the & they give reference to the accual buffer without having to copy them everytime they are used which would limit our memory even more.
+  // Circular buffers keep a fixed window of recent samples: once full, each new sample
+  // overwrites the oldest one, so RAM use stays constant. The getters above return
+  // references to these buffers so they are never copied.
   Adafruit_MPU6050 mpu;
   CircularBuffer<float, ACCEL_BUFFER_SIZE> accelBuffer;
   CircularBuffer<float, GYRO_BUFFER_SIZE> gyroBuffer;

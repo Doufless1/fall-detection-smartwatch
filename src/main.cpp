@@ -3,13 +3,13 @@
 #include "../include/Button.h"
 #include "../include/GyroSensor.h"
 #include "../include/FallDetection.h"
-#include "../include/NetworkManager.h"  // Add this line
+#include "../include/NetworkManager.h"
 #include "AudioController.h"
 
 GyroSensor gyroSensor;
 Button button;
 FallDetection *fallDetection = NULL;
-NetworkManager networkManager;  // Add this line
+NetworkManager networkManager;
 AudioController speaker;
 
 unsigned long lastSampleTime = 0;
@@ -77,10 +77,7 @@ void setup() {
     } else {
       Serial.println("Using default configuration values");
     }
-  // ---- REMOVE THE LINE BELOW ----
-  // networkManager.registerDeviceInternal(); // THIS LINE WAS CAUSING THE ERROR
-  // ---- END REMOVAL ----
-  
+
   digitalWrite(LED_PIN, HIGH);
   delay(100);
   digitalWrite(LED_PIN, LOW);

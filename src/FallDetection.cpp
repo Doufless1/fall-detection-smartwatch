@@ -45,7 +45,7 @@ bool FallDetection::detectFall() {
   // If not in free-fall, check for free-fall condition
   if (!inFreeFall) {
     if (accelMagnitude < FREEFALL_THRESHOLD) {
-      // maybe remove this part if it needs too much work?
+      // Strong rotation is only logged for now, it is not part of the fall decision
       if (gyroMagnitude > GYRO_THRESHOLD){
         Serial.printf("Significant rotation detected: %.2f deg/s\n", gyroMagnitude);
       }

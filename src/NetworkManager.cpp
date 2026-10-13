@@ -7,7 +7,6 @@ NetworkManager::NetworkManager() {
   authToken = ""; // Initialize authToken
 }
 
-// ---- NEW METHOD IMPLEMENTATION ----
 bool NetworkManager::fetchAuthToken() {
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("FetchAuthToken: WiFi not connected.");
@@ -55,7 +54,6 @@ bool NetworkManager::fetchAuthToken() {
   delete client;
   return false;
 }
-// ---- END NEW METHOD ----
 
 bool NetworkManager::initialize() {
   Serial.println("Initializing WiFi connection...");
