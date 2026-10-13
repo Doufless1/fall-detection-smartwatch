@@ -6,21 +6,22 @@
 #include <ArduinoJson.h>
 #include "Config.h"
 
-// WiFi credentials - update these with your network info
-#define WIFI_SSID "YOUR_WIFI_SSID"
-#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+// WiFi credentials and the API base URL live in secrets.h, which is not committed.
+// Copy include/secrets.example.h to include/secrets.h and fill in your own values.
+#if __has_include("secrets.h")
+#include "secrets.h"
+#else
+#warning "include/secrets.h not found, using the placeholders from secrets.example.h"
+#include "secrets.example.h"
+#endif
 
-// API endpoints - update with your server address
-#define API_BASE_URL "https://health-monitoring-api-gaajasa6aac0b9dy.canadacentral-01.azurewebsites.net/api"
+// API endpoints
 #define API_ENDPOINT API_BASE_URL "/SensorData"
 #define REGISTER_ENDPOINT API_BASE_URL "/DeviceTokens/register"
 #define GET_TOKEN_ENDPOINT API_BASE_URL "/get-test-token"
 #define GET_DEVICE_CONFIG_ENDPOINT API_BASE_URL "/device-config/"
 // Unique device identifier
 #define DEVICE_ID "ESP32_FALL_001"
-
-// Send data every 30 seconds
-//#define SEND_INTERVAL_MS 30000
 
 class NetworkManager {
 public:

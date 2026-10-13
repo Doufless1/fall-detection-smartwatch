@@ -15,3 +15,6 @@ venv/
 # Ignore PlatformIO core files
 platformio.ini.bak
 
+# Local WiFi credentials and API URL (see include/secrets.example.h)
+include/secrets.h
+
