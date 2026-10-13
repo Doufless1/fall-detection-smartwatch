@@ -203,6 +203,10 @@ bool NetworkManager::sendSensorData(float accel, float gyro, bool fallDetected) 
     Serial.println(httpResponseCode);
     
     Serial.println("Server Response: " + response);
+    // Token rejected: clear it so the next send fetches a new one
+    if (httpResponseCode == HTTP_CODE_UNAUTHORIZED || httpResponseCode == HTTP_CODE_FORBIDDEN) {
+      authToken = "";
+    }
     // Update last send time
     lastDataSendTime = now;
     http.end();
@@ -212,9 +216,6 @@ bool NetworkManager::sendSensorData(float accel, float gyro, bool fallDetected) 
     Serial.println("Error on sending POST: " + String(httpResponseCode));
     Serial.print("sendSensorData: HTTPC error: ");
     Serial.println(http.errorToString(httpResponseCode).c_str());
-    if (httpResponseCode == HTTP_CODE_UNAUTHORIZED || httpResponseCode == HTTP_CODE_FORBIDDEN) {
-      authToken = "";
-    }
     http.end();
     delete client;
     return false;
@@ -257,6 +258,10 @@ bool NetworkManager::registerDeviceInternal() {
   if (httpResponseCode > 0) {
     Serial.println("Device registration HTTP Response code: " + String(httpResponseCode));
     Serial.println("Response: " + http.getString());
+    // Token rejected: clear it so the next request fetches a new one
+    if (httpResponseCode == HTTP_CODE_UNAUTHORIZED || httpResponseCode == HTTP_CODE_FORBIDDEN) {
+      authToken = "";
+    }
     http.end();
     delete client;
     return (httpResponseCode == HTTP_CODE_OK || httpResponseCode == HTTP_CODE_CREATED);
@@ -264,9 +269,6 @@ bool NetworkManager::registerDeviceInternal() {
     Serial.println("Error on device registration: " + String(httpResponseCode));
     Serial.print("registerDeviceInternal: HTTPC error: ");
     Serial.println(http.errorToString(httpResponseCode).c_str());
-    if (httpResponseCode == HTTP_CODE_UNAUTHORIZED || httpResponseCode == HTTP_CODE_FORBIDDEN) {
-      authToken = "";
-    }
     http.end();
     delete client;
     return false;
